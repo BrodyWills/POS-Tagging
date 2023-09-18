@@ -61,7 +61,7 @@ def main():
     print('Features extracted')
 
     # Split data
-    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.3, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.3)
     print('Data split')
 
     # Vectorize features
@@ -72,7 +72,7 @@ def main():
     [x_train, x_test] = scale(x_train, x_test)
     print('Scaled')
 
-    # Run bayesian classifer
+    # Run bayesian classifier
     bayesian_classifier(x_train, x_test, y_train, y_test)
     # Run logistic regression
     logistic_regression(x_train, x_test, y_train, y_test)
