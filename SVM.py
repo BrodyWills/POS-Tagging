@@ -1,8 +1,10 @@
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score, classification_report
+import warnings
 
 
 def svm(x_train, x_test, y_train, y_test, test):
+    warnings.filterwarnings('ignore')
     # Create and fit model
     model = LinearSVC(dual='auto')
     model.fit(x_train, y_train)
@@ -19,7 +21,7 @@ def svm(x_train, x_test, y_train, y_test, test):
         input_data = input_file.readlines()
 
     # Write the original word and predicted tag for each line to the output file
-    with (open('labeled.txt', 'w', encoding='utf-8') as output_file):
+    with (open('labeled100.txt', 'w', encoding='utf-8') as output_file):
         for original_word in input_data:
             original_word = original_word.strip()
             if original_word == "":

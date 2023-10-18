@@ -61,7 +61,7 @@ def main():
     print('Features extracted')
 
     # Split data
-    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.001)
     print('Data split')
 
     # Vectorize features
