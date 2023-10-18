@@ -2,9 +2,6 @@ import pandas as pd
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MaxAbsScaler
-
-from Bayesian_Classifier import bayesian_classifier
-from Logistic_Regression import logistic_regression
 from SVM import svm
 
 
@@ -41,14 +38,14 @@ def extract_features(df):
     return features
 
 
-def vectorize_features(train, test):
+def vectorize_features(train, test, test2):
     vectorizer = DictVectorizer()
-    return [vectorizer.fit_transform(train), vectorizer.transform(test)]
+    return [vectorizer.fit_transform(train), vectorizer.transform(test), vectorizer.transform(test2)]
 
 
-def scale(train, test):
+def scale(train, test, test2):
     scaler = MaxAbsScaler()
-    return [scaler.fit_transform(train), scaler.transform(test)]
+    return [scaler.fit_transform(train), scaler.transform(test), scaler.transform(test2)]
 
 
 def main():
@@ -56,28 +53,27 @@ def main():
     df = load_data('train.txt')
     print('Data loaded')
 
+    test = load_data('in_domain_test_without_label.txt')
+
     # Extract features
     features = extract_features(df)
+    features_test = extract_features(test)
     print('Features extracted')
 
     # Split data
-    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.3)
+    x_train, x_test, y_train, y_test = train_test_split(features, df['POS'], test_size=0.2)
     print('Data split')
 
     # Vectorize features
-    [x_train, x_test] = vectorize_features(x_train, x_test)
+    [x_train, x_test, v_test] = vectorize_features(x_train, x_test, features_test)
     print('Vectorized features')
 
     # Scale features
-    [x_train, x_test] = scale(x_train, x_test)
+    [x_train, x_test, v_test] = scale(x_train, x_test, v_test)
     print('Scaled')
 
-    # Run bayesian classifier
-    bayesian_classifier(x_train, x_test, y_train, y_test)
-    # Run logistic regression
-    logistic_regression(x_train, x_test, y_train, y_test)
     # Run svm
-    svm(x_train, x_test, y_train, y_test)
+    svm(x_train, x_test, y_train, y_test, v_test)
 
 
 if __name__ == '__main__':
