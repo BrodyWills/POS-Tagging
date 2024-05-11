@@ -53,7 +53,7 @@ def main():
     df = load_data('train.txt')
     print('Data loaded')
 
-    test = load_data('in_domain_test_without_label.txt')
+    test = load_data('test.txt')
 
     # Extract features
     features = extract_features(df)
